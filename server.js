@@ -23,11 +23,14 @@ app.use(express.static("public"));
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
+// Tell Mongoose to use ES6 promises.
+mongoose.Promise = Promise;
+
 // Database Configuration with Mongoose
 // ---------------------------------------------------------------------------------------------------------------
 
 // Connect to localhost if not a production environment
-// var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scrapingmongoose";
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scrapingmongoose" || "MONGODB_URI: mongodb://heroku_m9bhzdg6:b50mg686apsl8lqhmkoaheh37u@ds123956.mlab.com:23956/heroku_m9bhzdg6";
 
 // if(process.env.NODE_ENV == 'production'){
 // mongoose.connect('MONGODB_URI: mongodb://heroku_m9bhzdg6:b50mg686apsl8lqhmkoaheh37u@ds123956.mlab.com:23956/heroku_m9bhzdg6');
@@ -38,15 +41,13 @@ app.set('view engine', 'handlebars');
 //   //mongoose.connect('mongodb://heroku_60zpcwg0:ubn0n27pi2856flqoedo9glvh8@ds119578.mlab.com:19578/heroku_60zpcwg0');
 // }
 
-var connectionString;
-if (process.env.PORT) {
-    connectionString = 'MONGODB_URI: mongodb://heroku_m9bhzdg6:b50mg686apsl8lqhmkoaheh37u@ds123956.mlab.com:23956/heroku_m9bhzdg6';
-} else {
-    connectionString = 'mongodb://localhost/scrapingmongoose';
-}
+// if (process.env.PORT) {
+//     mongoose.connect('MONGODB_URI: mongodb://heroku_m9bhzdg6:b50mg686apsl8lqhmkoaheh37u@ds123956.mlab.com:23956/heroku_m9bhzdg6');
+// } else {
+//     mongoose.connect('mongodb://localhost/scrapingmongoose');
+// }
 
-
-var db = mongoose.connection(connectionString);
+var db = mongoose.connection(MONGODB_URI);
 
 // Show any Mongoose errors
 db.on('error', function(err) {
@@ -62,11 +63,6 @@ db.once('open', function() {
 var Comment = require('./models/comment.js');
 var Article = require('./models/article.js');
 // ---------------------------------------------------------------------------------------------------------------
-
-// DROP DATABASE (FOR MY PERSONAL REFERENCE ONLY - YOU CAN IGNORE)
-// Article.remove({}, function(err) { 
-//    console.log('collection removed') 
-// });
 
 // Import Routes/Controller
 var router = require('./controllers/controller.js');
