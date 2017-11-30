@@ -46,7 +46,7 @@ mongoose.Promise = Promise;
 // } else {
 //      mongoose.connect('mongodb://localhost/scrapingmongoose');
 // }
-mongoose.connect('MONGODB_URI: mongodb://heroku_m9bhzdg6:b50mg686apsl8lqhmkoaheh37u@ds123956.mlab.com:23956/heroku_m9bhzdg6');
+mongoose.connect('mongodb://heroku_m9bhzdg6:b50mg686apsl8lqhmkoaheh37u@ds123956.mlab.com:23956/heroku_m9bhzdg6');
 var db = mongoose.connection;
 
 // Show any Mongoose errors
